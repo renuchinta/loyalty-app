@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BusinessUserRepository  extends JpaRepository<BusinessUser,Long> {
 
+    BusinessUser findByUserNameAndPassword(String username, String password);
 }

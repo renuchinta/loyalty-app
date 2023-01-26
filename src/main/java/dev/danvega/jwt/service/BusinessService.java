@@ -1,6 +1,7 @@
 package dev.danvega.jwt.service;
 
 import dev.danvega.jwt.model.BusinessUser;
+import dev.danvega.jwt.model.LoginRequest;
 import dev.danvega.jwt.repository.BusinessUserRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +20,7 @@ public class BusinessService {
     }
 
 
+    public BusinessUser findByUserNameAndPassword(LoginRequest loginRequest) {
+        return businessUserRepository.findByUserNameAndPassword(loginRequest.username(),loginRequest.password());
+    }
 }
