@@ -5,6 +5,9 @@ import dev.danvega.jwt.model.LoginRequest;
 import dev.danvega.jwt.repository.BusinessUserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class BusinessService {
 
@@ -22,5 +25,13 @@ public class BusinessService {
 
     public BusinessUser findByUserNameAndPassword(LoginRequest loginRequest) {
         return businessUserRepository.findByUserNameAndPassword(loginRequest.username(),loginRequest.password());
+    }
+
+    public Optional<BusinessUser> findById(Long id) {
+        return businessUserRepository.findById(id);
+    }
+
+    public List<BusinessUser> findAll() {
+        return businessUserRepository.findAll();
     }
 }

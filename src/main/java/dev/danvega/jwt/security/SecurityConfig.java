@@ -61,8 +61,8 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( auth -> auth
-                        .requestMatchers("/token","/businessSignup","/customerSignup","/login").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/token","/businessSignup","/customerSignup","/login","/saveProduct").permitAll()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

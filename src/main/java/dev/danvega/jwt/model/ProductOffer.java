@@ -1,8 +1,6 @@
 package dev.danvega.jwt.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +14,20 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProductOffer {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Basic(optional = false)
+    @Column(name = "id")
     private Long id;
 
     private String offerName;
     private Integer freeQuantity;
     private Integer purchaseQuantity;
+    private String productOfferImageUrl;
 
+    @OneToOne(mappedBy = "productOffer")
+    private Product product;
 
+    public void addProduct(Product product){
+        this.product=product;
+    }
 }

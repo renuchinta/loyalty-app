@@ -1,5 +1,6 @@
 package dev.danvega.jwt.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,24 +29,10 @@ public class BusinessUser {
     private String userName;
     private String phoneNumber;
     private String email;
-
-    @Override
-    public String toString() {
-        return "BusinessUser{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", userName='" + userName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
-
     private String password;
-
-
     // One business will have one product
     @OneToOne
+    @JsonIgnore
     private Product product;
 
     @ManyToMany
@@ -60,5 +47,16 @@ public class BusinessUser {
         }
     }
 
+    @Override
+    public String toString() {
+        return "BusinessUser{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", userName='" + userName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 
 }
