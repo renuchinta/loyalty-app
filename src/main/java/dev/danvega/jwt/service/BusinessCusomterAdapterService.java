@@ -17,7 +17,6 @@ public class BusinessCusomterAdapterService {
         this.businessService = businessService;
         this.customerService = customerService;
     }
-
     public ResponseEntity<HttpStatus> login(LoginRequest loginRequest) {
         if(loginRequest.userType().equalsIgnoreCase("CUSTOMER")){
             Customer customer=  customerService.findByUserNameAndPassword(loginRequest);
