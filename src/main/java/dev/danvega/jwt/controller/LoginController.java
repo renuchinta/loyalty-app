@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/login")
 public class LoginController {
 
-    BusinessCusomterAdapterService businessCusomterAdapterService;
+    private final BusinessCusomterAdapterService businessCusomterAdapterService;
+
+    public LoginController(BusinessCusomterAdapterService businessCusomterAdapterService) {
+        this.businessCusomterAdapterService = businessCusomterAdapterService;
+    }
 
     @PostMapping
     public ResponseEntity<HttpStatus> login(@RequestBody LoginRequest loginRequest){
