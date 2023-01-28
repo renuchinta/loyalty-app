@@ -5,6 +5,8 @@ import dev.danvega.jwt.model.LoginRequest;
 import dev.danvega.jwt.repository.CustomerRespository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomerService {
 
@@ -20,5 +22,9 @@ public class CustomerService {
     }
     public Customer findByUserNameAndPassword(LoginRequest loginRequest){
         return customerRespository.findByUsernameAndPassword(loginRequest.username(),loginRequest.password());
+    }
+
+    public Optional<Customer> findById(Long id){
+        return customerRespository.findById(id);
     }
 }
