@@ -1,5 +1,6 @@
 package dev.danvega.jwt.service;
 
+import dev.danvega.jwt.dto.UserDTO;
 import dev.danvega.jwt.model.BusinessUser;
 import dev.danvega.jwt.model.Customer;
 import dev.danvega.jwt.model.LoginRequest;
@@ -19,25 +20,21 @@ public class BusinessCusomterAdapterService {
         this.businessService = businessService;
         this.customerService = customerService;
     }
-    public ResponseEntity<HttpStatus> login(LoginRequest loginRequest) {
+    public ResponseEntity<UserDTO> login(LoginRequest loginRequest) {
+        UserDTO userDTO = new UserDTO();
         if(loginRequest.userType().equalsIgnoreCase("CUSTOMER")){
             Customer customer=  customerService.findByUserNameAndPassword(loginRequest);
-            if(customer.getId() != null){
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
+            userDTO.setEmail(customer.getEmail());
+            userDTO.setUsername(customer.getUsername());
+            userDTO.setPhoneNumber(customer.getPhoneNumber());
+            return new ResponseEntity<>(userDTO,HttpStatus.OK);
         }else{
             BusinessUser businessUser=  businessService.findByUserNameAndPassword(loginRequest);
-            if(businessUser.getId()!= null){
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
+            userDTO.setEmail(businessUser.getEmail());
+            userDTO.setUsername(businessUser.getUserName());
+            userDTO.setPhoneNumber(businessUser.getPhoneNumber());
+            return new ResponseEntity<>(userDTO,HttpStatus.OK);
         }
-        return  new ResponseEntity<>(HttpStatus.FORBIDDEN);
-    }
-    /*{
-        "productId": 1,
-            "customerId": 1,
-            "businessId": 1,
-            "orderedQuantity":3
-    }*/
 
+    }
 }

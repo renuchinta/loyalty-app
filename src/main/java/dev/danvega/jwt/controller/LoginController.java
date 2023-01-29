@@ -1,6 +1,7 @@
 package dev.danvega.jwt.controller;
 
 
+import dev.danvega.jwt.dto.UserDTO;
 import dev.danvega.jwt.model.LoginRequest;
 import dev.danvega.jwt.service.BusinessCusomterAdapterService;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,7 @@ public class LoginController {
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> login(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<UserDTO> login(@RequestBody LoginRequest loginRequest){
         return businessCusomterAdapterService.login(loginRequest);
-
     }
 }
