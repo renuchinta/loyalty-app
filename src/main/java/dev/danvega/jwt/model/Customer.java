@@ -27,6 +27,14 @@ public class Customer {
     @ManyToMany(mappedBy = "customerList")
     private List<BusinessUser> businessUserList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "customer")
+    private List<CustomerOrder> customerOrders = new ArrayList<>();
+
+    public void addCustomerOrders(CustomerOrder customerOrder){
+        if(!getCustomerOrders().contains(customerOrder)){
+            getCustomerOrders().add(customerOrder);
+        }
+    }
     public void addBusinessUser(BusinessUser businessUser) {
         if (!getBusinessUserList().contains(businessUser)) {
             getBusinessUserList().add(businessUser);

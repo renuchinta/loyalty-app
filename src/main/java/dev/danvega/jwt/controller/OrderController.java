@@ -1,0 +1,28 @@
+package dev.danvega.jwt.controller;
+
+
+import dev.danvega.jwt.dto.OrderResponseDTO;
+import dev.danvega.jwt.model.CustomerOrder;
+import dev.danvega.jwt.service.BusinessCusomterAdapterService;
+import dev.danvega.jwt.service.OrderService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class OrderController {
+
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    @PostMapping("/placeOrder")
+    public ResponseEntity<OrderResponseDTO> placeOrder(@RequestBody CustomerOrder customerOrder) throws Exception {
+        OrderResponseDTO orderResponseDTO = orderService.placeOrder(customerOrder);
+        return new ResponseEntity<>(orderResponseDTO, HttpStatus.OK);
+    }
+}

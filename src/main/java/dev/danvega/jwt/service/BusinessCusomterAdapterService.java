@@ -3,6 +3,7 @@ package dev.danvega.jwt.service;
 import dev.danvega.jwt.model.BusinessUser;
 import dev.danvega.jwt.model.Customer;
 import dev.danvega.jwt.model.LoginRequest;
+import dev.danvega.jwt.model.CustomerOrder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ public class BusinessCusomterAdapterService {
 
     private final BusinessService businessService;
     private final CustomerService customerService;
+
 
     public BusinessCusomterAdapterService(BusinessService businessService, CustomerService customerService) {
         this.businessService = businessService;
@@ -31,4 +33,11 @@ public class BusinessCusomterAdapterService {
         }
         return  new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
+    /*{
+        "productId": 1,
+            "customerId": 1,
+            "businessId": 1,
+            "orderedQuantity":3
+    }*/
+
 }
