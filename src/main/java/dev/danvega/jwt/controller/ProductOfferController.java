@@ -1,6 +1,5 @@
 package dev.danvega.jwt.controller;
 
-import dev.danvega.jwt.model.Product;
 import dev.danvega.jwt.model.ProductOffer;
 import dev.danvega.jwt.service.ProductOfferService;
 import dev.danvega.jwt.service.ProductService;
@@ -16,14 +15,13 @@ import java.util.Optional;
 public class ProductOfferController {
 
     private final ProductOfferService productOfferService;
-    private final ProductService productService;
 
-    public ProductOfferController(ProductOfferService productOfferService, ProductService productService) {
+    public ProductOfferController(ProductOfferService productOfferService) {
         this.productOfferService = productOfferService;
-        this.productService = productService;
+
     }
 
-    @PostMapping("/saveProductOffers")
+    /*@PostMapping("/saveProductOffers")
     public ProductOffer saveProductOffers(@RequestBody ProductOffer productOffer) throws Exception {
         Optional<Product> product=  productService.findById(productOffer.getProduct().getId());
         if(product.isPresent()){
@@ -34,8 +32,12 @@ public class ProductOfferController {
             return productOffer1;
         }
         throw new Exception("error while saving product offer ");
-    }
+    }*/
 
+    @PostMapping("/saveProductOffers")
+    public ProductOffer saveProductOffers(@RequestBody ProductOffer productOffer){
+            return productOfferService.saveProductOffers(productOffer);
+    }
     @GetMapping("/productOffers")
     public List<ProductOffer> productOffers(){
         return productOfferService.getAllProductOffers();

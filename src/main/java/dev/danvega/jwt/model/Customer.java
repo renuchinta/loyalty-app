@@ -40,7 +40,4 @@ public class Customer {
             getBusinessUserList().add(businessUser);
         }
     }
-
-
-
 }

@@ -1,6 +1,5 @@
 package dev.danvega.jwt.controller;
 
-import dev.danvega.jwt.model.BusinessUser;
 import dev.danvega.jwt.model.Product;
 import dev.danvega.jwt.service.BusinessService;
 import dev.danvega.jwt.service.ProductService;
@@ -14,15 +13,13 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductService productService;
-    private final BusinessService businessService;
 
 
-    public ProductController(ProductService productService, BusinessService businessService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
-        this.businessService = businessService;
     }
 
-    @PostMapping("/saveProduct")
+   /* @PostMapping("/saveProduct")
     public Product saveProduct(@RequestBody Product product) throws Exception {
         Optional<BusinessUser> business = businessService.findById(product.getBusinessUser().getId());
         if(business.isPresent()){
@@ -33,8 +30,12 @@ public class ProductController {
             return savedProdcut;
         }
         throw new Exception("Author with id " + product + " does not exist");
-    }
+    }*/
 
+    @PostMapping("/saveProduct")
+    public Product saveProduct(@RequestBody Product product)  {
+            return productService.saveProduct(product);
+    }
     @GetMapping("/products")
     public List<Product> products(){
         return productService.findAllProducts();

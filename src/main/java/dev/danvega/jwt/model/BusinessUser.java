@@ -1,6 +1,6 @@
 package dev.danvega.jwt.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +16,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator= ObjectIdGenerators.UUIDGenerator.class, property="@id")
 public class BusinessUser {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,7 +33,7 @@ public class BusinessUser {
     private String password;
     // One business will have one product
     @OneToOne
-    @JsonIgnore
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToMany

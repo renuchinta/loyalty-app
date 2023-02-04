@@ -1,21 +1,26 @@
 package dev.danvega.jwt.controller;
 
 
+import dev.danvega.jwt.dto.CompleteBusinessUserSignUp;
 import dev.danvega.jwt.model.BusinessUser;
+import dev.danvega.jwt.service.BusinessCusomterAdapterService;
 import dev.danvega.jwt.service.BusinessService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
 public class BusinessUserController {
 
     private final BusinessService businessService;
+    private final BusinessCusomterAdapterService businessCusomterAdapterService;
 
-    public BusinessUserController(BusinessService businessService) {
+    public BusinessUserController(BusinessService businessService, BusinessCusomterAdapterService businessCusomterAdapterService) {
         this.businessService = businessService;
+        this.businessCusomterAdapterService = businessCusomterAdapterService;
     }
 
     @PostMapping("/businessSignup")
@@ -31,7 +36,17 @@ public class BusinessUserController {
 
     @GetMapping("/businessUser")
     public BusinessUser getBusinessUserById(@RequestParam Long id) throws Exception {
-        return businessService.findById(id).orElseThrow(() -> new Exception("Business user does not exists"));
+        Optional<BusinessUser> businessUser = businessService.findById(id);
+        if(businessUser.isPresent()){
+            return businessUser.get();
+        }else{
+           throw  new Exception("Business user does not exists");
+        }
+    }
 
+    @PostMapping("/completeBusinessUserSignup")
+    public BusinessUser completeBusinessUserSignup(@RequestBody CompleteBusinessUserSignUp completeBusinessUserSignUp
+                                                   ) {
+        return businessCusomterAdapterService.completeBusinessUserSignup(completeBusinessUserSignUp);
     }
 }

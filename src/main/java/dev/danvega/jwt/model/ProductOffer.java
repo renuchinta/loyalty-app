@@ -1,5 +1,6 @@
 package dev.danvega.jwt.model;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator= ObjectIdGenerators.UUIDGenerator.class, property="@id")
 public class ProductOffer {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -23,6 +25,7 @@ public class ProductOffer {
     private Integer freeQuantity;
     private Integer purchaseQuantity;
     private String productOfferImageUrl;
+
 
     @OneToOne(mappedBy = "productOffer")
     private Product product;
