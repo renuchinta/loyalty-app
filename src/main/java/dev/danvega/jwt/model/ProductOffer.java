@@ -26,11 +26,11 @@ public class ProductOffer {
     private Integer purchaseQuantity;
     private String productOfferImageUrl;
 
-
+/*
     @OneToOne(mappedBy = "productOffer")
     private Product product;
 
     public void addProduct(Product product){
         this.product=product;
-    }
+    }*/
 }

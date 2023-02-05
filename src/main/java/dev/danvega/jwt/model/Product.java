@@ -21,16 +21,13 @@ public class Product {
 
     private String productName;
     private String productImage;
-    @OneToOne(mappedBy = "product")
+   /* @OneToOne(mappedBy = "product")
     @JoinColumn(name = "business_id")
-    private BusinessUser businessUser;
+    private BusinessUser businessUser;*/
     @OneToOne
     @JoinColumn(name = "product_offer_id")
     private ProductOffer productOffer;
 
-    public void addBusinessUser(BusinessUser businessUser){
-        this.businessUser = businessUser;
-    }
 
     public void addProductOffer(ProductOffer productOffer){
         this.productOffer=productOffer;

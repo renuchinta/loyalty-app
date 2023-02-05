@@ -50,9 +50,9 @@ public class BusinessCusomterAdapterService {
             businessService.saveBusinessUser(businessUser);
 
             Optional<ProductOffer> productOffer = productOfferService.findById(completeBusinessUserSignUp.getProductOfferId());
-            product.get().addBusinessUser(businessUser);
+       //     product.get().addBusinessUser(businessUser);
             product.get().addProductOffer(productOffer.get());
-            productOffer.get().addProduct(product.get());
+         //   productOffer.get().addProduct(product.get());
             productService.saveProduct(product.get());
         }
         return business.get();

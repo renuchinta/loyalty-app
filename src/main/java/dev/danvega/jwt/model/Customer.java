@@ -1,5 +1,7 @@
 package dev.danvega.jwt.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.danvega.jwt.dto.BusinessCustomerDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -8,6 +10,13 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedNativeQuery(name = "Customer.getAllBusinessUsers",
+                            query = "select c.business_id,c.customer_id from business_customer  c where c.customer_id = :customerId"
+                            ,resultSetMapping = "Mapping.BusinessCustomerDTO")
+@SqlResultSetMapping(name = "Mapping.BusinessCustomerDTO",
+                        classes = @ConstructorResult(targetClass = BusinessCustomerDTO.class,
+                                                    columns = {@ColumnResult(name = "c.business_id",type = Long.class),
+                                                                @ColumnResult(name = "c.customer_id",type = Long.class)}))
 @Data
 @Getter
 @Setter
@@ -25,6 +34,7 @@ public class Customer {
     private String password;
 
     @ManyToMany(mappedBy = "customerList")
+    @JsonIgnore
     private List<BusinessUser> businessUserList = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer")

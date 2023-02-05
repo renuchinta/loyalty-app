@@ -1,8 +1,12 @@
 package dev.danvega.jwt.dto;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class BusinessCustomerDTO {
 
     private Long businessID;
