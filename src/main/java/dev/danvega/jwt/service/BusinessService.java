@@ -31,6 +31,10 @@ public class BusinessService {
         return businessUserRepository.findById(id);
     }
 
+    public Optional<BusinessUser> findByBusinessQRId(String businessQRId) {
+        return businessUserRepository.findByBusinessQRId(businessQRId);
+    }
+
     public List<BusinessUser> findAll() {
         return businessUserRepository.findAll();
     }

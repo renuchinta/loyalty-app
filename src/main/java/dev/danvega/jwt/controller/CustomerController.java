@@ -1,6 +1,6 @@
 package dev.danvega.jwt.controller;
 
-import dev.danvega.jwt.dto.BusinessCustomerDTO;
+import dev.danvega.jwt.dto.EnrollCustomerToBusiness;
 import dev.danvega.jwt.model.BusinessUser;
 import dev.danvega.jwt.model.Customer;
 import dev.danvega.jwt.repository.BusinessUserRepository;
@@ -33,15 +33,17 @@ public class CustomerController {
     }
 
     @PostMapping("/enrollCustomerToBusiness")
-    public ResponseEntity<HttpStatus> enrollCustomerToBusiness(@RequestBody BusinessCustomerDTO businessCustomerDTO){
-        Optional<BusinessUser> businessUser = businessService.findById(businessCustomerDTO.getBusinessID());
+    public ResponseEntity<HttpStatus> enrollCustomerToBusiness(@RequestBody EnrollCustomerToBusiness enrollCustomerToBusiness){
+        Optional<BusinessUser> businessUser = businessService.findByBusinessQRId(enrollCustomerToBusiness.getBusinessQRId());
         if(businessUser.isPresent()){
-            Customer customer = customerService.findById(businessCustomerDTO.getCustomerID()).get();
+            Customer customer = customerService.findById(enrollCustomerToBusiness.getCustomerID()).get();
             businessUser.get().addCustomers(customer);
             customer.addBusinessUser(businessUser.get());
             businessUserRepository.save(businessUser.get());
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
     @GetMapping("/getAllBusinessForCustomers")

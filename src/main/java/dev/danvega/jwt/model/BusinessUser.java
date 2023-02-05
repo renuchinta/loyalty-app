@@ -31,6 +31,7 @@ public class BusinessUser {
     private String phoneNumber;
     private String email;
     private String password;
+    private String businessQRId;
     // One business will have one product
     @OneToOne
     @JoinColumn(name = "product_id")

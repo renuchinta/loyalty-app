@@ -1,7 +1,8 @@
 package dev.danvega.jwt.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.danvega.jwt.dto.BusinessCustomerDTO;
+import dev.danvega.jwt.dto.BusinessToCustomer;
+import dev.danvega.jwt.dto.EnrollCustomerToBusiness;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.List;
                             query = "select c.business_id,c.customer_id from business_customer  c where c.customer_id = :customerId"
                             ,resultSetMapping = "Mapping.BusinessCustomerDTO")
 @SqlResultSetMapping(name = "Mapping.BusinessCustomerDTO",
-                        classes = @ConstructorResult(targetClass = BusinessCustomerDTO.class,
+                        classes = @ConstructorResult(targetClass = BusinessToCustomer.class,
                                                     columns = {@ColumnResult(name = "c.business_id",type = Long.class),
                                                                 @ColumnResult(name = "c.customer_id",type = Long.class)}))
 @Data

@@ -11,5 +11,6 @@ public class CompleteBusinessUserSignUp {
     private Long businessUserId;
     private Long productId;
     private Long productOfferId;
+    private String businessQRId;
 
 }

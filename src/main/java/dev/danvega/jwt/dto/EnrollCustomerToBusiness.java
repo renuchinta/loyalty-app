@@ -7,9 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BusinessCustomerDTO {
+public class EnrollCustomerToBusiness {
 
-    private Long businessID;
     private Long customerID;
+    private String businessQRId;
 
 }

@@ -1,6 +1,5 @@
 package dev.danvega.jwt.service;
 
-import dev.danvega.jwt.dto.BusinessCustomerDTO;
 import dev.danvega.jwt.model.BusinessUser;
 import dev.danvega.jwt.model.Customer;
 import dev.danvega.jwt.model.LoginRequest;

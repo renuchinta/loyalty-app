@@ -46,6 +46,7 @@ public class BusinessCusomterAdapterService {
         if(business.isPresent()){
             Optional<Product> product = productService.findById(completeBusinessUserSignUp.getProductId());
             BusinessUser businessUser = business.get();
+            businessUser.setBusinessQRId(completeBusinessUserSignUp.getBusinessQRId());
             businessUser.setProduct(product.get());
             businessService.saveBusinessUser(businessUser);
 
