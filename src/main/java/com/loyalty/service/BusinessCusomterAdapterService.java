@@ -28,12 +28,14 @@ public class BusinessCusomterAdapterService {
         UserDTO userDTO = new UserDTO();
         if(loginRequest.userType().equalsIgnoreCase("CUSTOMER")){
             Customer customer=  customerService.findByUserNameAndPassword(loginRequest);
+            userDTO.setId(customer.getId());
             userDTO.setEmail(customer.getEmail());
             userDTO.setUsername(customer.getUsername());
             userDTO.setPhoneNumber(customer.getPhoneNumber());
             return new ResponseEntity<>(userDTO,HttpStatus.OK);
         }else{
             BusinessUser businessUser=  businessService.findByUserNameAndPassword(loginRequest);
+            userDTO.setId(businessUser.getId());
             userDTO.setEmail(businessUser.getEmail());
             userDTO.setUsername(businessUser.getUserName());
             userDTO.setPhoneNumber(businessUser.getPhoneNumber());
