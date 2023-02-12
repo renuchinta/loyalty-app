@@ -1,16 +1,12 @@
-rsa:
-  private-key: classpath:certs/private.pem
-  public-key: classpath:certs/public.pem
-
-my:
-  app:
-    name: youtube
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/LOYALTY_APP
+    url: jdbc:mysql://loyaltymysql:3306/LOYALTY_APP
     username: root
     password: password
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+server:
+  port: 8090

@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  loyalty-app:
+    container_name: loyalty-app
+    image: crenukeswar/loyalty-app:latest
+    restart: on-failure
+    ports:
+      - 8090:8090
+    environment:
+      WAIT_HOSTS: mysql:3306
+
+  mysql:
+    container_name: loyaltymysql
+    image: mysql:latest
+   
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: LOYALTY_APP

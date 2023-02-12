@@ -1,0 +1,29 @@
+version: '3'
+services:
+  loyalty-app:
+    container_name: loyalty-app
+    image: crenukeswar/loyalty-app:latest
+    restart: on-failure
+    ports:
+      - 8090:8090
+    environment:
+      WAIT_HOSTS: mysql:3306
+    depends_on:
+      - mysql-db
+  mysql-db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: LOYALTY_APP
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      # port exposed : mysql port running inside container
+      - "3306:3306"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: "/usr/bin/mysql --user=root password=password --execute \"SHOW DATABASES\""
+      interval: 4s
+      timeout: 20s
+      retries: 5

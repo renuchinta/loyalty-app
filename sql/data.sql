@@ -1,0 +1,1 @@
+create database LOYALTY_APP IF NOT EXISTS
