@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://loyaltymysql:3306/LOYALTY_APP
+    url: jdbc:mysql://localhost:3306/LOYALTY_APP
     username: root
     password: password
   jpa:

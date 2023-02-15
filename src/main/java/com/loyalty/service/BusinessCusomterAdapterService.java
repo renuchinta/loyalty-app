@@ -32,6 +32,7 @@ public class BusinessCusomterAdapterService {
             userDTO.setEmail(customer.getEmail());
             userDTO.setUsername(customer.getUsername());
             userDTO.setPhoneNumber(customer.getPhoneNumber());
+            userDTO.setQrCode(customer.getPhoneNumber());
             return new ResponseEntity<>(userDTO,HttpStatus.OK);
         }else{
             BusinessUser businessUser=  businessService.findByUserNameAndPassword(loginRequest);
@@ -39,6 +40,9 @@ public class BusinessCusomterAdapterService {
             userDTO.setEmail(businessUser.getEmail());
             userDTO.setUsername(businessUser.getUserName());
             userDTO.setPhoneNumber(businessUser.getPhoneNumber());
+            userDTO.setProductId(businessUser.getProduct().getId());
+            userDTO.setProductImage(businessUser.getProduct().getProductImage());
+            userDTO.setQrCode(businessUser.getBusinessQRId());
             return new ResponseEntity<>(userDTO,HttpStatus.OK);
         }
 
