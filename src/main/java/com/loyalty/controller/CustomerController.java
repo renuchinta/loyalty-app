@@ -50,4 +50,10 @@ public class CustomerController {
     public List<BusinessUser> getAllBusinessUserForCustomer(@RequestParam Long customerId){
         return customerService.getAllBusinessUsers(customerId);
     }
+
+
+    @GetMapping("/getBusinessDetails")
+    public Optional<BusinessUser> getBusinessDetails(@RequestParam Long businessId) {
+        return businessService.findById(businessId);
+    }
 }
