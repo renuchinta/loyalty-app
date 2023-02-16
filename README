@@ -15,3 +15,6 @@ Business user to complete sign up :
     install docker & docker-compose in ec2 instance
     https://www.cyberciti.biz/faq/how-to-install-docker-on-amazon-linux-2/
 
+ Docker commands
+ 1: docker build
+
