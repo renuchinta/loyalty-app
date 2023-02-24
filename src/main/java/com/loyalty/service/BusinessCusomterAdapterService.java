@@ -17,6 +17,8 @@ public class BusinessCusomterAdapterService {
     private final CustomerService customerService;
     private final ProductService productService;
 
+    //HibernateJpaConfiguration hibernate;
+    
     private final ProductOfferService productOfferService;
     public BusinessCusomterAdapterService(BusinessService businessService, CustomerService customerService, ProductService productService, ProductOfferService productOfferService) {
         this.businessService = businessService;
@@ -26,7 +28,7 @@ public class BusinessCusomterAdapterService {
     }
     public ResponseEntity<UserDTO> login(LoginRequest loginRequest) {
         UserDTO userDTO = new UserDTO();
-        if(loginRequest.userType().equalsIgnoreCase("CUSTOMER")){
+        if(loginRequest.getUserType().equalsIgnoreCase("CUSTOMER")){
             Customer customer=  customerService.findByUserNameAndPassword(loginRequest);
             userDTO.setId(customer.getId());
             userDTO.setEmail(customer.getEmail());

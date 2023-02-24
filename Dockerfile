@@ -1,4 +1,3 @@
-FROM openjdk:11
-EXPOSE 8080
-ADD target/loyalty-app.jar loyalty-app.jar
-ENTRYPOINT ["java","-jar","loyalty-app.jar"]
+FROM adoptopenjdk/openjdk11:alpine-jre
+ADD target/loyalty-0.1.jar app.jar
+ENTRYPOINT ["java","-jar","app.jar"]

@@ -1,6 +1,10 @@
 package com.loyalty.model;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
+
+import org.hibernate.annotations.Cascade;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +25,7 @@ public class CustomerOrder {
     private Long productId;
     private Long orderedQuantity;
     private Boolean status;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="customer_id", nullable=false)
     private Customer customer;
 

@@ -1,13 +1,31 @@
-version: '3.1'
+version: '3.3'
 
 services:
   db:
     image: mysql
+    container_name: mysql-db2
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 'password'
+      - MYSQL_ROOT_PASSWORD=password
     ports:
-      # port exposed : mysql port running inside container
       - "3306:3306"
-    volumes:
-      - ./sql/data.sql:/docker-entrypoint-initdb.d/data.sql
+    networks:
+      - backend
+
+  demo:
+    image: crenukeswar/loyalty
+    restart: on-failure
+    container_name: my-spring-boot-app
+    depends_on:
+      - db
+    ports:
+      - "8090:8090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/LOYALTY_APP
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    networks:
+      - backend
+
+networks:
+  backend:

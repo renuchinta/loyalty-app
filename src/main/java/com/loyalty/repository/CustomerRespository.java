@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CustomerRespository extends JpaRepository<Customer,Long> {
@@ -14,4 +15,6 @@ public interface CustomerRespository extends JpaRepository<Customer,Long> {
 
     @Query(nativeQuery = true)
     List<BusinessToCustomer> getAllBusinessUsers(Long customerId);
+
+    Optional<Customer> findByCustomerQRId(String customerQRId);
 }
