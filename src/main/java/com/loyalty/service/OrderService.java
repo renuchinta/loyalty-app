@@ -32,7 +32,7 @@ public class OrderService {
         OrderResponseDTO orderResponseDTO = new OrderResponseDTO();
        // Optional<Customer> customerEntity = customerRespository.findById(customerOrder.getCustomer().getId());
        Optional<Customer> customerEntity = customerRespository.findByCustomerQRId(customerOrder.getCustomer().getCustomerQRId());
-       int productOfferQunatity ;
+       int productOfferQunatity = 0;
         if(customerEntity.isPresent()){
             Long aggregatedQuantityValue = customerEntity.get().getCustomerOrders().stream().filter(customer -> customer.getStatus().equals(true))
                                             .map(CustomerOrder::getOrderedQuantity).collect(Collectors.summingLong(Long::longValue));
