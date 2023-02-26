@@ -32,13 +32,14 @@ public class OrderService {
         OrderResponseDTO orderResponseDTO = new OrderResponseDTO();
        // Optional<Customer> customerEntity = customerRespository.findById(customerOrder.getCustomer().getId());
        Optional<Customer> customerEntity = customerRespository.findByCustomerQRId(customerOrder.getCustomer().getCustomerQRId());
+       int productOfferQunatity ;
         if(customerEntity.isPresent()){
             Long aggregatedQuantityValue = customerEntity.get().getCustomerOrders().stream().filter(customer -> customer.getStatus().equals(true))
                                             .map(CustomerOrder::getOrderedQuantity).collect(Collectors.summingLong(Long::longValue));
             int productOfferPurchaseQunatity = customerEntity.get().getBusinessUserList().stream().filter(business -> business.getId().equals(customerOrder.getBusinessId()))
                     .findFirst().get().getProduct().getProductOffer().getPurchaseQuantity().intValue();
-            int productOfferQunatity = customerEntity.get().getBusinessUserList().stream().filter(business -> business.getId().equals(customerOrder.getBusinessId()))
-                    .findFirst().get().getProduct().getProductOffer().getPurchaseQuantity().intValue();
+            // int productOfferQunatity = customerEntity.get().getBusinessUserList().stream().filter(business -> business.getId().equals(customerOrder.getBusinessId()))
+            //         .findFirst().get().getProduct().getProductOffer().getPurchaseQuantity().intValue();
             long finalAccumulatedPurchaseQuantity = aggregatedQuantityValue+customerOrder.getOrderedQuantity();
             if(finalAccumulatedPurchaseQuantity <= productOfferPurchaseQunatity){
                 Customer customer = saveActualCustomerOrder(customerOrder.getOrderedQuantity(),customerOrder,customerEntity);
