@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,7 @@ public class OrderService {
                     .findFirst().get().getProduct().getProductOffer().getPurchaseQuantity().intValue();
             long finalAccumulatedPurchaseQuantity = aggregatedQuantityValue+customerOrder.getOrderedQuantity();
             if(finalAccumulatedPurchaseQuantity <= productOfferPurchaseQunatity){
-                Customer customer = saveActualCustomerOrder(customerOrder.getOrderedQuantity(),customerOrder,customerEntity);
+                saveActualCustomerOrder(customerOrder.getOrderedQuantity(),customerOrder,customerEntity);
                 orderResponseDTO.setFreeQuantity(0L);
                 orderResponseDTO.setAnyOfferApplied(false);
                 orderResponseDTO.setMessage("Customer has No offer");
@@ -55,7 +56,7 @@ public class OrderService {
                         customerOrder1.setStatus(false);
                         return null;
                     }).collect(Collectors.toList());
-                    Customer customer = saveActualCustomerOrder(customerOrder.getOrderedQuantity(),customerOrder, customerEntity);
+                    saveActualCustomerOrder(customerOrder.getOrderedQuantity(),customerOrder, customerEntity);
                     orderResponseDTO.setFreeQuantity(actualQuantityAfterOffer);
                     orderResponseDTO.setAnyOfferApplied(true);
                     orderResponseDTO.setMessage("Customer has offer");
@@ -73,14 +74,15 @@ public class OrderService {
         }
     }
 
-    private Customer saveActualCustomerOrder(Long actualQuantity, CustomerOrder customerOrder, Optional<Customer> customerEntity) {
-        
-        customerOrder.setStatus(true);
-        customerOrder.setOrderedQuantity(actualQuantity);
-        CustomerOrder customerOrderEntity = orderRepository.save(customerOrder);
-        customerEntity.get().addCustomerOrders(customerOrderEntity);
-        customerOrderEntity.addCustomer(customerEntity.get());
-        return customerRespository.save(customerEntity.get());
+    private CustomerOrder saveActualCustomerOrder(Long actualQuantity, CustomerOrder customerOrder, Optional<Customer> customerEntity) {
+        List<CustomerOrder> cOrder = orderRepository.findByCustomerId(customerEntity.get().getId());
+        CustomerOrder dbCustomerOrder = cOrder.get(0);
+        dbCustomerOrder.setStatus(true);
+        dbCustomerOrder.setOrderedQuantity(actualQuantity + dbCustomerOrder.getOrderedQuantity());
+        return orderRepository.save(dbCustomerOrder);
+       // customerEntity.get().addCustomerOrders(customerOrderEntity);
+        //customerOrderEntity.addCustomer(customerEntity.get());
+        //return customerRespository.save(customerEntity.get());
 
     }
 }
