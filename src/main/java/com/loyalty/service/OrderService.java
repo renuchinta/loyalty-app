@@ -75,14 +75,19 @@ public class OrderService {
     }
 
     private CustomerOrder saveActualCustomerOrder(Long actualQuantity, CustomerOrder customerOrder, Optional<Customer> customerEntity) {
-        List<CustomerOrder> cOrder = orderRepository.findByCustomerId(customerEntity.get().getId());
-        CustomerOrder dbCustomerOrder = cOrder.get(0);
+        
+        CustomerOrder cOrder = orderRepository.findByCustomerId(customerEntity.get().getId());
+        CustomerOrder dbCustomerOrder = cOrder == null  ? new CustomerOrder() : cOrder;
+        Long qtyt = cOrder == null ? 0 : dbCustomerOrder.getOrderedQuantity();
         dbCustomerOrder.setStatus(true);
-        dbCustomerOrder.setOrderedQuantity(actualQuantity + dbCustomerOrder.getOrderedQuantity());
+        dbCustomerOrder.setOrderedQuantity(actualQuantity + qtyt);
+        dbCustomerOrder.setCustomer(customerEntity.get());
+        dbCustomerOrder.setBusinessId(customerOrder.getBusinessId());
+        dbCustomerOrder.setProductId(customerOrder.getProductId());
         return orderRepository.save(dbCustomerOrder);
        // customerEntity.get().addCustomerOrders(customerOrderEntity);
         //customerOrderEntity.addCustomer(customerEntity.get());
         //return customerRespository.save(customerEntity.get());
 
     }
-}
+}   

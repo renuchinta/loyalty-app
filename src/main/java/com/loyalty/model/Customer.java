@@ -39,7 +39,7 @@ public class Customer {
     @JsonIgnore
     private List<BusinessUser> businessUserList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany
     private List<CustomerOrder> customerOrders = new ArrayList<>();
 
     public void addCustomerOrders(CustomerOrder customerOrder){

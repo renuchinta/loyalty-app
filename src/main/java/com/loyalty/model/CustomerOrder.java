@@ -25,8 +25,8 @@ public class CustomerOrder {
     private Long productId;
     private Long orderedQuantity;
     private Boolean status;
-    @ManyToOne
-    @JoinColumn(name="customer_id", nullable=false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="customer_id")
     private Customer customer;
 
 
