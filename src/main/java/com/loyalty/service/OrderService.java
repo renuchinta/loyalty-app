@@ -32,7 +32,7 @@ public class OrderService {
     public  OrderResponseDTO placeOrder(@RequestBody CustomerOrder customerOrder) throws Exception {
         OrderResponseDTO orderResponseDTO = new OrderResponseDTO();
        // Optional<Customer> customerEntity = customerRespository.findById(customerOrder.getCustomer().getId());
-       Optional<Customer> customerEntity = customerRespository.findByCustomerQRId(customerOrder.getCustomer().getCustomerQRId());
+       Optional<Customer> customerEntity = customerRespository.findByCustomerQRId(customerOrder.getCustomerQRId());
         if(customerEntity.isPresent()){
             Long aggregatedQuantityValue = customerEntity.get().getCustomerOrders().stream().filter(customer -> customer.getStatus().equals(true))
                                             .map(CustomerOrder::getOrderedQuantity).collect(Collectors.summingLong(Long::longValue));

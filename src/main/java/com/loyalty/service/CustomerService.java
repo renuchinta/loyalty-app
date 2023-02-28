@@ -33,7 +33,13 @@ public class CustomerService {
     public Optional<Customer> findById(Long id){
         return customerRespository.findById(id);
     }
-
+    public Boolean getCustomerByQrId(String customerQrId){
+        Optional<Customer> customer = customerRespository.findByCustomerQRId(customerQrId);
+        if(customer.isPresent()){
+            return true;
+        }
+        return false;
+    }
     public List<BusinessUser> getAllBusinessUsers(Long customerId) {
         return customerRespository.getAllBusinessUsers(customerId).stream()
                                                     .map(a -> businessUserRepository.findById(a.getBusinessID()))

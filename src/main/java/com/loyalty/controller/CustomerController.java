@@ -56,4 +56,10 @@ public class CustomerController {
     public Optional<BusinessUser> getBusinessDetails(@RequestParam Long businessId) {
         return businessService.findById(businessId);
     }
+
+    @GetMapping("/getCustomerByQRId")
+    public ResponseEntity<HttpStatus> getCustomerByQrId(@RequestParam String customerByQRId) {
+        Boolean customerExists = customerService.getCustomerByQrId(businessId);
+        return customerExists ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.CONFLICT);
+    }
 }

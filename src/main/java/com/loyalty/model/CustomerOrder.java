@@ -25,6 +25,7 @@ public class CustomerOrder {
     private Long productId;
     private Long orderedQuantity;
     private Boolean status;
+    private String customerQRId;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="customer_id")
     private Customer customer;
