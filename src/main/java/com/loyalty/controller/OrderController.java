@@ -21,7 +21,7 @@ public class OrderController {
 
     @PostMapping("/placeOrder")
     public ResponseEntity<OrderResponseDTO> placeOrder(@RequestBody CustomerOrder customerOrder) throws Exception {
-        OrderResponseDTO orderResponseDTO = orderService.placeOrder(customerOrder);
+        OrderResponseDTO orderResponseDTO = orderService.placeOrder2(customerOrder);
         return new ResponseEntity<>(orderResponseDTO, HttpStatus.OK);
     }
 }

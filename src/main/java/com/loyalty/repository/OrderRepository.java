@@ -9,4 +9,7 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<CustomerOrder,Long> {
 
     CustomerOrder findByCustomerId(Long customerId);
+
+
+    CustomerOrder findByBusinessIdAndProductIdAndCustomerQrId(Long businessId,Long productId,String customerQRId);
 }

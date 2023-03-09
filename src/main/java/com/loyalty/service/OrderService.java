@@ -1,8 +1,10 @@
 package com.loyalty.service;
 
 import com.loyalty.dto.OrderResponseDTO;
+import com.loyalty.model.BusinessUser;
 import com.loyalty.model.Customer;
 import com.loyalty.model.CustomerOrder;
+import com.loyalty.repository.BusinessUserRepository;
 import com.loyalty.repository.CustomerRespository;
 import com.loyalty.repository.OrderRepository;
 import org.slf4j.Logger;
@@ -22,24 +24,25 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final CustomerRespository customerRespository;
+    private final BusinessUserRepository businessRepository;
 
-    public OrderService(OrderRepository orderRepository, CustomerRespository customerRespository) {
+    public OrderService(OrderRepository orderRepository, CustomerRespository customerRespository,BusinessUserRepository businessRepository) {
         this.orderRepository = orderRepository;
         this.customerRespository = customerRespository;
+        this.businessRepository = businessRepository;
     }
 
 
     public  OrderResponseDTO placeOrder(@RequestBody CustomerOrder customerOrder) throws Exception {
         OrderResponseDTO orderResponseDTO = new OrderResponseDTO();
        // Optional<Customer> customerEntity = customerRespository.findById(customerOrder.getCustomer().getId());
-       Optional<Customer> customerEntity = customerRespository.findByCustomerQRId(customerOrder.getCustomerQRId());
+       Optional<Customer> customerEntity = customerRespository.findByCustomerQRId(customerOrder.getCustomerQrId());
         if(customerEntity.isPresent()){
             Long aggregatedQuantityValue = customerEntity.get().getCustomerOrders().stream().filter(customer -> customer.getStatus().equals(true))
                                             .map(CustomerOrder::getOrderedQuantity).collect(Collectors.summingLong(Long::longValue));
             int productOfferPurchaseQunatity = customerEntity.get().getBusinessUserList().stream().filter(business -> business.getId().equals(customerOrder.getBusinessId()))
                     .findFirst().get().getProduct().getProductOffer().getPurchaseQuantity().intValue();
-            int productOfferQunatity = customerEntity.get().getBusinessUserList().stream().filter(business -> business.getId().equals(customerOrder.getBusinessId()))
-                    .findFirst().get().getProduct().getProductOffer().getPurchaseQuantity().intValue();
+            
             long finalAccumulatedPurchaseQuantity = aggregatedQuantityValue+customerOrder.getOrderedQuantity();
             if(finalAccumulatedPurchaseQuantity <= productOfferPurchaseQunatity){
                 saveActualCustomerOrder(customerOrder.getOrderedQuantity(),customerOrder,customerEntity);
@@ -49,7 +52,7 @@ public class OrderService {
                 return orderResponseDTO;
             }else{
                 long offerQuantity = finalAccumulatedPurchaseQuantity - productOfferPurchaseQunatity;
-                long actualQuantityAfterOffer = productOfferQunatity - offerQuantity;
+                long actualQuantityAfterOffer = productOfferPurchaseQunatity - offerQuantity;
                 if(actualQuantityAfterOffer > 0){
                     customerEntity.get().getCustomerOrders().stream().map(order -> {
                         CustomerOrder customerOrder1 = orderRepository.findById(order.getId()).get();
@@ -81,7 +84,6 @@ public class OrderService {
         Long qtyt = cOrder == null ? 0 : dbCustomerOrder.getOrderedQuantity();
         dbCustomerOrder.setStatus(true);
         dbCustomerOrder.setOrderedQuantity(actualQuantity + qtyt);
-        dbCustomerOrder.setCustomer(customerEntity.get());
         dbCustomerOrder.setBusinessId(customerOrder.getBusinessId());
         dbCustomerOrder.setProductId(customerOrder.getProductId());
         return orderRepository.save(dbCustomerOrder);
@@ -90,4 +92,51 @@ public class OrderService {
         //return customerRespository.save(customerEntity.get());
 
     }
+
+
+
+
+    public  OrderResponseDTO placeOrder2(@RequestBody CustomerOrder customerOrder) throws Exception {
+        OrderResponseDTO orderResponseDTO = new OrderResponseDTO();
+        CustomerOrder custOrder = orderRepository.findByBusinessIdAndProductIdAndCustomerQrId(customerOrder.getBusinessId()
+                                                ,customerOrder.getProductId(),
+                                                customerOrder.getCustomerQrId());
+        
+        
+        if(custOrder != null){
+            //get qty from db from custOrder;
+            Long currentlySavedQty = custOrder.getOrderedQuantity();
+            Optional<BusinessUser> businessUser = businessRepository.findById(customerOrder.getBusinessId());
+            Integer purchaseQuantity = businessUser.get().getProduct().getProductOffer().getPurchaseQuantity();
+            Integer freeQty = businessUser.get().getProduct().getProductOffer().getFreeQuantity();
+            if(currentlySavedQty + customerOrder.getOrderedQuantity() < purchaseQuantity) { // 7 < 10
+                custOrder.setOrderedQuantity(currentlySavedQty + customerOrder.getOrderedQuantity());
+                custOrder.setTotalQtyGainedTillNow(currentlySavedQty + customerOrder.getOrderedQuantity());
+                orderRepository.save(custOrder);
+            }else{
+                // 12 <10 ;
+                long qtyLeftAfterApplyingOffer = (currentlySavedQty + customerOrder.getOrderedQuantity()) - purchaseQuantity;
+
+                custOrder.setOrderedQuantity(qtyLeftAfterApplyingOffer);
+                custOrder.setTotalQtyGainedTillNow(currentlySavedQty + customerOrder.getOrderedQuantity());
+                custOrder.setTotalFreeQtyGainedTillNow(custOrder.getTotalFreeQtyGainedTillNow()+1);
+                orderRepository.save(custOrder);
+            }
+
+        }else{
+            CustomerOrder dbCustomerOrder = new CustomerOrder();
+            dbCustomerOrder.setBusinessId(customerOrder.getBusinessId());
+            dbCustomerOrder.setProductId(customerOrder.getProductId());
+            dbCustomerOrder.setOrderedQuantity(customerOrder.getOrderedQuantity());
+            dbCustomerOrder.setCustomerQrId(customerOrder.getCustomerQrId());
+            Optional<Customer> dbCustomer = customerRespository.findByCustomerQRId(customerOrder.getCustomerQrId());
+            dbCustomerOrder.setCustomer(dbCustomer.get());
+            dbCustomerOrder.setTotalQtyGainedTillNow(customerOrder.getOrderedQuantity());
+            orderRepository.save(dbCustomerOrder);
+        }                                 
+       
+        return orderResponseDTO;
+
+    }
+
 }   

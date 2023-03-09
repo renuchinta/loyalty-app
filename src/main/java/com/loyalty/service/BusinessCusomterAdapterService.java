@@ -43,6 +43,7 @@ public class BusinessCusomterAdapterService {
             userDTO.setUsername(businessUser.getUserName());
             userDTO.setPhoneNumber(businessUser.getPhoneNumber());
             userDTO.setProductId(businessUser.getProduct().getId());
+            userDTO.setProductName(businessUser.getProduct().getProductName());
             userDTO.setProductImage(businessUser.getProduct().getProductImage());
             userDTO.setQrCode(businessUser.getBusinessQRId());
             return new ResponseEntity<>(userDTO,HttpStatus.OK);

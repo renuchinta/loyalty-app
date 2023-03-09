@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "CUSTOMER_ORDER")
-@AllArgsConstructor
+@AllArgsConstructor 
 @NoArgsConstructor
 @Getter
 @Setter
@@ -25,9 +25,12 @@ public class CustomerOrder {
     private Long productId;
     private Long orderedQuantity;
     private Boolean status;
-    private String customerQRId;
+    private String customerQrId;
+    private Long totalQtyGainedTillNow;
+    private Long totalFreeQtyGainedTillNow;
+
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="customer_id")
+    @JoinColumn(name="customer_id", nullable=false)
     private Customer customer;
 
 
