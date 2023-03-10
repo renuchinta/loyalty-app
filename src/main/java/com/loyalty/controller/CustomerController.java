@@ -58,8 +58,8 @@ public class CustomerController {
     }
 
     @GetMapping("/getCustomerByQRId")
-    public ResponseEntity<HttpStatus> getCustomerByQrId(@RequestParam String customerQRId) {
-        Boolean customerExists = customerService.getCustomerByQrId(customerQRId);
+    public ResponseEntity<HttpStatus> getCustomerByQrId(@RequestParam String customerByQRId) {
+        Boolean customerExists = customerService.getCustomerByQrId(customerByQRId);
         return customerExists ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 }

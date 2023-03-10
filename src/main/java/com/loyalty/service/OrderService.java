@@ -33,68 +33,6 @@ public class OrderService {
     }
 
 
-    // public  OrderResponseDTO placeOrder(@RequestBody CustomerOrder customerOrder) throws Exception {
-    //     OrderResponseDTO orderResponseDTO = new OrderResponseDTO();
-    //    // Optional<Customer> customerEntity = customerRespository.findById(customerOrder.getCustomer().getId());
-    //    Optional<Customer> customerEntity = customerRespository.findByCustomerQRId(customerOrder.getCustomerQrId());
-    //     if(customerEntity.isPresent()){
-    //         Long aggregatedQuantityValue = customerEntity.get().getCustomerOrders().stream().filter(customer -> customer.getStatus().equals(true))
-    //                                         .map(CustomerOrder::getOrderedQuantity).collect(Collectors.summingLong(Long::longValue));
-    //         int productOfferPurchaseQunatity = customerEntity.get().getBusinessUserList().stream().filter(business -> business.getId().equals(customerOrder.getBusinessId()))
-    //                 .findFirst().get().getProduct().getProductOffer().getPurchaseQuantity().intValue();
-            
-    //         long finalAccumulatedPurchaseQuantity = aggregatedQuantityValue+customerOrder.getOrderedQuantity();
-    //         if(finalAccumulatedPurchaseQuantity <= productOfferPurchaseQunatity){
-    //             saveActualCustomerOrder(customerOrder.getOrderedQuantity(),customerOrder,customerEntity);
-    //             orderResponseDTO.setFreeQuantity(0L);
-    //             orderResponseDTO.setAnyOfferApplied(false);
-    //             orderResponseDTO.setMessage("Customer has No offer");
-    //             return orderResponseDTO;
-    //         }else{
-    //             long offerQuantity = finalAccumulatedPurchaseQuantity - productOfferPurchaseQunatity;
-    //             long actualQuantityAfterOffer = productOfferPurchaseQunatity - offerQuantity;
-    //             if(actualQuantityAfterOffer > 0){
-    //                 customerEntity.get().getCustomerOrders().stream().map(order -> {
-    //                     CustomerOrder customerOrder1 = orderRepository.findById(order.getId()).get();
-    //                     customerOrder1.setStatus(false);
-    //                     return null;
-    //                 }).collect(Collectors.toList());
-    //                 saveActualCustomerOrder(customerOrder.getOrderedQuantity(),customerOrder, customerEntity);
-    //                 orderResponseDTO.setFreeQuantity(actualQuantityAfterOffer);
-    //                 orderResponseDTO.setAnyOfferApplied(true);
-    //                 orderResponseDTO.setMessage("Customer has offer");
-    //                 return orderResponseDTO;
-    //             }else{
-    //                // return  "One coffe should be given free as offer qty and order qty are same";
-    //                 orderResponseDTO.setFreeQuantity(0L);
-    //                 orderResponseDTO.setAnyOfferApplied(true);
-    //                 orderResponseDTO.setMessage("Customer has reached exactly offered quantity");
-    //                 return orderResponseDTO;
-    //             }
-    //         }
-    //     }else{
-    //         throw new Exception("Customer id is not present");
-    //     }
-    // }
-
-    // private CustomerOrder saveActualCustomerOrder(Long actualQuantity, CustomerOrder customerOrder, Optional<Customer> customerEntity) {
-        
-    //     CustomerOrder cOrder = orderRepository.findByCustomerId(customerEntity.get().getId());
-    //     CustomerOrder dbCustomerOrder = cOrder == null  ? new CustomerOrder() : cOrder;
-    //     Long qtyt = cOrder == null ? 0 : dbCustomerOrder.getOrderedQuantity();
-    //     dbCustomerOrder.setStatus(true);
-    //     dbCustomerOrder.setOrderedQuantity(actualQuantity + qtyt);
-    //     dbCustomerOrder.setBusinessId(customerOrder.getBusinessId());
-    //     dbCustomerOrder.setProductId(customerOrder.getProductId());
-    //     return orderRepository.save(dbCustomerOrder);
-    //    // customerEntity.get().addCustomerOrders(customerOrderEntity);
-    //     //customerOrderEntity.addCustomer(customerEntity.get());
-    //     //return customerRespository.save(customerEntity.get());
-
-    // }
-
-
-
 
     public  OrderResponseDTO placeOrder2(@RequestBody CustomerOrder customerOrder) throws Exception {
         OrderResponseDTO orderResponseDTO = new OrderResponseDTO();
@@ -144,5 +82,6 @@ public class OrderService {
         return orderResponseDTO;
 
     }
+
 
 }   
