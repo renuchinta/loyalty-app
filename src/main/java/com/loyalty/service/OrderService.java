@@ -55,7 +55,7 @@ public class OrderService {
                 // 12 <10 ;
                 long qtyLeftAfterApplyingOffer = (currentlySavedQty + customerOrder.getOrderedQuantity()) - purchaseQuantity;
 
-                custOrder.setOrderedQuantity(qtyLeftAfterApplyingOffer);
+                custOrder.setOrderedQuantity(qtyLeftAfterApplyingOffer-freeQty);
                 custOrder.setTotalQtyGainedTillNow(currentlySavedQty + customerOrder.getOrderedQuantity());
                 custOrder.setTotalFreeQtyGainedTillNow(custOrder.getTotalFreeQtyGainedTillNow()+1);
                 orderRepository.save(custOrder);
@@ -70,6 +70,7 @@ public class OrderService {
             Optional<Customer> dbCustomer = customerRespository.findByCustomerQRId(customerOrder.getCustomerQrId());
             dbCustomerOrder.setCustomer(dbCustomer.get());
             dbCustomerOrder.setTotalQtyGainedTillNow(customerOrder.getOrderedQuantity());
+            dbCustomerOrder.setTotalFreeQtyGainedTillNow(0L);
             orderRepository.save(dbCustomerOrder);
         }                                 
        
