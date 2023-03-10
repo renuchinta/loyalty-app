@@ -34,7 +34,7 @@ public class BusinessCusomterAdapterService {
             userDTO.setEmail(customer.getEmail());
             userDTO.setUsername(customer.getUsername());
             userDTO.setPhoneNumber(customer.getPhoneNumber());
-            userDTO.setQrCode(customer.getPhoneNumber());
+            userDTO.setQrCode(customer.getCustomerQRId());
             return new ResponseEntity<>(userDTO,HttpStatus.OK);
         }else{
             BusinessUser businessUser=  businessService.findByUserNameAndPassword(loginRequest);
