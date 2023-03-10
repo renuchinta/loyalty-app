@@ -45,23 +45,20 @@ public class OrderService {
             //get qty from db from custOrder;
             Long currentlySavedQty = custOrder.getOrderedQuantity();
             Optional<BusinessUser> businessUser = businessRepository.findById(customerOrder.getBusinessId());
-            long savedProductOfferQuantity = businessUser.get().getProduct().getProductOffer().getPurchaseQuantity();
-            long productOfferSavedFreeQty = businessUser.get().getProduct().getProductOffer().getFreeQuantity();
-            if(currentlySavedQty + customerOrder.getOrderedQuantity() < savedProductOfferQuantity) { // 7 < 10
+            Integer purchaseQuantity = businessUser.get().getProduct().getProductOffer().getPurchaseQuantity();
+            Integer freeQty = businessUser.get().getProduct().getProductOffer().getFreeQuantity();
+            if(currentlySavedQty + customerOrder.getOrderedQuantity() < purchaseQuantity) { // 7 < 10
                 custOrder.setOrderedQuantity(currentlySavedQty + customerOrder.getOrderedQuantity());
                 custOrder.setTotalQtyGainedTillNow(currentlySavedQty + customerOrder.getOrderedQuantity());
                 orderRepository.save(custOrder);
             }else{
-                // 12 <10 ; 12-10 = 2 in this 2 how many should be free depends on productOfferSavedFreeQty value
-                 long totalQtyAfterProductOfferQty = (currentlySavedQty + customerOrder.getOrderedQuantity()) - savedProductOfferQuantity;
-               // Now set order qunatity to left out products after substracitng offer quantity
-                custOrder.setOrderedQuantity(totalQtyAfterProductOfferQty - productOfferSavedFreeQty);
+                // 12 <10 ;
+                long qtyLeftAfterApplyingOffer = (currentlySavedQty + customerOrder.getOrderedQuantity()) - purchaseQuantity;
+
+                custOrder.setOrderedQuantity(qtyLeftAfterApplyingOffer);
                 custOrder.setTotalQtyGainedTillNow(currentlySavedQty + customerOrder.getOrderedQuantity());
-                custOrder.setTotalFreeQtyGainedTillNow(custOrder.getTotalFreeQtyGainedTillNow()+productOfferSavedFreeQty);
+                custOrder.setTotalFreeQtyGainedTillNow(custOrder.getTotalFreeQtyGainedTillNow()+1);
                 orderRepository.save(custOrder);
-                orderResponseDTO.setAnyOfferApplied(true);
-                orderResponseDTO.setFreeQuantity(productOfferSavedFreeQty);
-                orderResponseDTO.setMessage("Offer is applied ");
             }
 
         }else{
@@ -73,12 +70,9 @@ public class OrderService {
             Optional<Customer> dbCustomer = customerRespository.findByCustomerQRId(customerOrder.getCustomerQrId());
             dbCustomerOrder.setCustomer(dbCustomer.get());
             dbCustomerOrder.setTotalQtyGainedTillNow(customerOrder.getOrderedQuantity());
-            dbCustomerOrder.setTotalFreeQtyGainedTillNow(0L);
             orderRepository.save(dbCustomerOrder);
         }                                 
-        orderResponseDTO.setAnyOfferApplied(false);
-        orderResponseDTO.setFreeQuantity(0L);
-        orderResponseDTO.setMessage("No Offer is applied ");
+       
         return orderResponseDTO;
 
     }
