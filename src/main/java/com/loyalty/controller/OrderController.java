@@ -6,6 +6,8 @@ import com.loyalty.model.CustomerOrder;
 import com.loyalty.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,4 +26,12 @@ public class OrderController {
         OrderResponseDTO orderResponseDTO = orderService.placeOrder2(customerOrder);
         return new ResponseEntity<>(orderResponseDTO, HttpStatus.OK);
     }
+
+    // @GetMapping("/customerOrdersTillNow/{customerId}/{businessId}")
+    // public void customerOrdersTillNow(@PathVariable long customerId,@PathVariable long businessId){
+    //     CustomerOrdersTillNow customerOrders = orderService.customerOrdersTillNow();
+
+    // }
+  
 }
+

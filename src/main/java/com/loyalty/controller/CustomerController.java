@@ -32,11 +32,11 @@ public class CustomerController {
         return ResponseEntity.ok(savedCustomer);
     }
 
-    @PostMapping("/enrollCustomerToBusiness")
-    public ResponseEntity<HttpStatus> enrollCustomerToBusiness(@RequestBody EnrollCustomerToBusiness enrollCustomerToBusiness){
-        Optional<BusinessUser> businessUser = businessService.findByBusinessQRId(enrollCustomerToBusiness.getBusinessQRId());
+    @PostMapping("/enrollCustomerToBusiness/{customerID}/{businessQRId}")
+    public ResponseEntity<HttpStatus> enrollCustomerToBusiness(@PathVariable long customerID, @PathVariable String businessQRId){
+        Optional<BusinessUser> businessUser = businessService.findByBusinessQRId(businessQRId);
         if(businessUser.isPresent()){
-            Customer customer = customerService.findById(enrollCustomerToBusiness.getCustomerID()).get();
+            Customer customer = customerService.findById(customerID).get();
             businessUser.get().addCustomers(customer);
             customer.addBusinessUser(businessUser.get());
             businessUserRepository.save(businessUser.get());

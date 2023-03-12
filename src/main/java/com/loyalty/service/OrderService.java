@@ -33,7 +33,6 @@ public class OrderService {
     }
 
 
-
     public  OrderResponseDTO placeOrder2(@RequestBody CustomerOrder customerOrder) throws Exception {
         OrderResponseDTO orderResponseDTO = new OrderResponseDTO();
         CustomerOrder custOrder = orderRepository.findByBusinessIdAndProductIdAndCustomerQrId(customerOrder.getBusinessId()
@@ -46,19 +45,26 @@ public class OrderService {
             Long currentlySavedQty = custOrder.getOrderedQuantity();
             Optional<BusinessUser> businessUser = businessRepository.findById(customerOrder.getBusinessId());
             Integer purchaseQuantity = businessUser.get().getProduct().getProductOffer().getPurchaseQuantity();
-            Integer freeQty = businessUser.get().getProduct().getProductOffer().getFreeQuantity();
+            long freeQty = businessUser.get().getProduct().getProductOffer().getFreeQuantity();
             if(currentlySavedQty + customerOrder.getOrderedQuantity() < purchaseQuantity) { // 7 < 10
                 custOrder.setOrderedQuantity(currentlySavedQty + customerOrder.getOrderedQuantity());
                 custOrder.setTotalQtyGainedTillNow(currentlySavedQty + customerOrder.getOrderedQuantity());
                 orderRepository.save(custOrder);
+                orderResponseDTO.setAnyOfferApplied(false);
+                orderResponseDTO.setFreeQuantity(0L);
+                orderResponseDTO.setMessage("User has no free quantity");
             }else{
                 // 12 <10 ;
                 long qtyLeftAfterApplyingOffer = (currentlySavedQty + customerOrder.getOrderedQuantity()) - purchaseQuantity;
 
-                custOrder.setOrderedQuantity(qtyLeftAfterApplyingOffer-freeQty);
-                custOrder.setTotalQtyGainedTillNow(currentlySavedQty + customerOrder.getOrderedQuantity());
+                long finalQty = qtyLeftAfterApplyingOffer-freeQty <=  freeQty ? 0 : qtyLeftAfterApplyingOffer-freeQty;
+                custOrder.setOrderedQuantity(finalQty);
+                custOrder.setTotalQtyGainedTillNow(currentlySavedQty + custOrder.getTotalQtyGainedTillNow());
                 custOrder.setTotalFreeQtyGainedTillNow(custOrder.getTotalFreeQtyGainedTillNow()+1);
                 orderRepository.save(custOrder);
+                orderResponseDTO.setAnyOfferApplied(true);
+                orderResponseDTO.setFreeQuantity(freeQty);
+                orderResponseDTO.setMessage("User has free quantity");
             }
 
         }else{
@@ -72,6 +78,9 @@ public class OrderService {
             dbCustomerOrder.setTotalQtyGainedTillNow(customerOrder.getOrderedQuantity());
             dbCustomerOrder.setTotalFreeQtyGainedTillNow(0L);
             orderRepository.save(dbCustomerOrder);
+            orderResponseDTO.setAnyOfferApplied(false);
+            orderResponseDTO.setFreeQuantity(0L);
+            orderResponseDTO.setMessage("User has no free quantity");
         }                                 
        
         return orderResponseDTO;
