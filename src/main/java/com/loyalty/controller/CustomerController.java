@@ -1,7 +1,7 @@
 package com.loyalty.controller;
 
 import com.loyalty.model.BusinessUser;
-import com.loyalty.dto.EnrollCustomerToBusiness;
+import com.loyalty.dto.CustomerOrdersTillNow;
 import com.loyalty.model.Customer;
 import com.loyalty.repository.BusinessUserRepository;
 import com.loyalty.service.BusinessService;
@@ -62,4 +62,12 @@ public class CustomerController {
         Boolean customerExists = customerService.getCustomerByQrId(customerByQRId);
         return customerExists ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.CONFLICT);
     }
+
+    @GetMapping("/customerOrdersTillNow/{customerId}/{businessId}")
+    public ResponseEntity<CustomerOrdersTillNow> customerOrdersTillNow(@PathVariable long customerId
+                            ,@PathVariable long businessId){
+            CustomerOrdersTillNow customerOrdersTillNow = customerService.customerOrdersTillNow(customerId,businessId);
+        return ResponseEntity.ok(customerOrdersTillNow);
+    }
+    
 }

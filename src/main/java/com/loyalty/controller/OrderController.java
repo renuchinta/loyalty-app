@@ -2,6 +2,7 @@ package com.loyalty.controller;
 
 
 import com.loyalty.dto.OrderResponseDTO;
+import com.loyalty.dto.CustomerOrdersTillNow;
 import com.loyalty.model.CustomerOrder;
 import com.loyalty.service.OrderService;
 import org.springframework.http.HttpStatus;
@@ -27,11 +28,7 @@ public class OrderController {
         return new ResponseEntity<>(orderResponseDTO, HttpStatus.OK);
     }
 
-    // @GetMapping("/customerOrdersTillNow/{customerId}/{businessId}")
-    // public void customerOrdersTillNow(@PathVariable long customerId,@PathVariable long businessId){
-    //     CustomerOrdersTillNow customerOrders = orderService.customerOrdersTillNow();
-
-    // }
+   
   
 }
 
