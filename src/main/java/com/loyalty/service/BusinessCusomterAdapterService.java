@@ -42,10 +42,10 @@ public class BusinessCusomterAdapterService {
             userDTO.setEmail(businessUser.getEmail());
             userDTO.setUsername(businessUser.getUserName());
             userDTO.setPhoneNumber(businessUser.getPhoneNumber());
-            userDTO.setProductId(businessUser.getProduct().getId());
-            userDTO.setProductName(businessUser.getProduct().getProductName());
-            userDTO.setProductImage(businessUser.getProduct().getProductImage());
-            userDTO.setQrCode(businessUser.getBusinessQRId());
+            userDTO.setProductId(businessUser.getProduct() == null ? 0 : businessUser.getProduct().getId());
+            userDTO.setProductName(businessUser.getProduct() == null ? "" :  businessUser.getProduct().getProductName());
+            userDTO.setProductImage(businessUser.getProduct() ==null ? "" :  businessUser.getProduct().getProductImage());
+            userDTO.setQrCode(businessUser.getBusinessQRId() == null ? "" : businessUser.getBusinessQRId());
             return new ResponseEntity<>(userDTO,HttpStatus.OK);
         }
 

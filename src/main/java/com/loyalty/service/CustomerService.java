@@ -1,6 +1,6 @@
 package com.loyalty.service;
 
-import com.loyalty.dto.BusinessToCustomer;
+import com.loyalty.dto.BusinessCustomDTO;
 import com.loyalty.dto.CustomerOrdersTillNow;
 import com.loyalty.model.BusinessUser;
 import com.loyalty.model.Customer;
@@ -50,11 +50,22 @@ public class CustomerService {
         }
         return false;
     }
-    public List<BusinessUser> getAllBusinessUsers(Long customerId) {
-        return customerRespository.getAllBusinessUsers(customerId).stream()
+    public List<BusinessCustomDTO> getAllBusinessUsers(Long customerId) {
+        return customerRespository.getAllBusinessUsers(customerId)
+                .stream()
                 .map(a -> businessUserRepository.findById(a.getBusinessID()))
-                .flatMap(Optional::stream)
+                .map(b -> createBusinessCustomeDTO(b))
                 .collect(Collectors.toList());
+    }
+
+    public BusinessCustomDTO createBusinessCustomeDTO(Optional<BusinessUser> businessUser1){
+        BusinessUser businessUser = businessUser1.get();
+        BusinessCustomDTO businessCustomDTO  = new BusinessCustomDTO();
+        businessCustomDTO.setBusinessId(businessUser.getId());
+        businessCustomDTO.setBusinessName(businessUser.getUserName());
+        businessCustomDTO.setBusinessQrId(businessUser.getBusinessQRId());
+        businessCustomDTO.setId(businessUser.getId());
+        return businessCustomDTO;
     }
     public CustomerOrdersTillNow customerOrdersTillNow(long customerId,long businessId){
 

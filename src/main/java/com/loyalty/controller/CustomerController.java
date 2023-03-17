@@ -1,5 +1,6 @@
 package com.loyalty.controller;
 
+import com.loyalty.dto.BusinessCustomDTO;
 import com.loyalty.model.BusinessUser;
 import com.loyalty.dto.CustomerOrdersTillNow;
 import com.loyalty.model.Customer;
@@ -47,7 +48,7 @@ public class CustomerController {
     }
 
     @GetMapping("/getAllBusinessForCustomers")
-    public List<BusinessUser> getAllBusinessUserForCustomer(@RequestParam Long customerId){
+    public List<BusinessCustomDTO> getAllBusinessUserForCustomer(@RequestParam Long customerId){
         return customerService.getAllBusinessUsers(customerId);
     }
 

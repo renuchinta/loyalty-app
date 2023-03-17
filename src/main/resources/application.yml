@@ -1,10 +1,10 @@
 
 spring:
   datasource:
-#    url: jdbc:mysql://18.236.117.247:3306/LOYALTY_APP?createDatabaseIfNotExist=true
-    url: jdbc:mysql://localhost:3306/LOYALTY_APP?createDatabaseIfNotExist=true
-    username: root
-    password: password
+    url: jdbc:mysql://mydatabase.cxbkosas0ihq.us-west-2.rds.amazonaws.com:3306/LOYALTY_APP?createDatabaseIfNotExist=true
+  #  url: jdbc:mysql://localhost:3306/LOYALTY_APP?createDatabaseIfNotExist=true
+    username: renu
+    password: renukeswar
     hikari:
       initialization-fail-timeout: 0
   jpa:
@@ -13,7 +13,7 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+      use-new-id-generator-mappings: false
 
 server:
   port: 8090
-
