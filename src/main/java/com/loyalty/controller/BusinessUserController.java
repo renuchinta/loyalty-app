@@ -5,6 +5,7 @@ import com.loyalty.dto.CompleteBusinessUserSignUp;
 import com.loyalty.model.BusinessUser;
 import com.loyalty.service.BusinessCusomterAdapterService;
 import com.loyalty.service.BusinessService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,8 +46,8 @@ public class BusinessUserController {
     }
 
     @PostMapping("/completeBusinessUserSignup")
-    public BusinessUser completeBusinessUserSignup(@RequestBody CompleteBusinessUserSignUp completeBusinessUserSignUp
-                                                   ) {
-        return businessCusomterAdapterService.completeBusinessUserSignup(completeBusinessUserSignUp);
+    public HttpStatus completeBusinessUserSignup(@RequestBody CompleteBusinessUserSignUp completeBusinessUserSignUp) {
+        boolean signUpSuccessOrNOt = businessCusomterAdapterService.completeBusinessUserSignup(completeBusinessUserSignUp);
+        return signUpSuccessOrNOt ? HttpStatus.ACCEPTED : HttpStatus.NO_CONTENT ;
     }
 }

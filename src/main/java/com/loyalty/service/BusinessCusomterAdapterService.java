@@ -51,7 +51,7 @@ public class BusinessCusomterAdapterService {
 
     }
 
-    public BusinessUser completeBusinessUserSignup(CompleteBusinessUserSignUp completeBusinessUserSignUp) {
+    public boolean completeBusinessUserSignup(CompleteBusinessUserSignUp completeBusinessUserSignUp) {
         Optional<BusinessUser> business = businessService.findById(completeBusinessUserSignUp.getBusinessUserId());
         if(business.isPresent()){
             Optional<Product> product = productService.findById(completeBusinessUserSignUp.getProductId());
@@ -65,7 +65,8 @@ public class BusinessCusomterAdapterService {
             product.get().addProductOffer(productOffer.get());
          //   productOffer.get().addProduct(product.get());
             productService.saveProduct(product.get());
+            return true;
         }
-        return business.get();
+        return false;
     }
 }

@@ -54,8 +54,8 @@ public class OrderService {
                 orderResponseDTO.setFreeQuantity(0L);
                 orderResponseDTO.setMessage("User has no free quantity");
             }else{
-                // 12 <10 ;
-                long qtyLeftAfterApplyingOffer = (currentlySavedQty + customerOrder.getOrderedQuantity()) - purchaseQuantity;
+                // 12 <10 ;  // 10 < 10  -- > 2  2 -1  7+3 =10  , 10 -1  0 - 1 -1
+                 long qtyLeftAfterApplyingOffer = (currentlySavedQty + customerOrder.getOrderedQuantity()) - purchaseQuantity;
 
                 long finalQty = qtyLeftAfterApplyingOffer-freeQty <=  freeQty ? 0 : qtyLeftAfterApplyingOffer-freeQty;
                 custOrder.setOrderedQuantity(finalQty);

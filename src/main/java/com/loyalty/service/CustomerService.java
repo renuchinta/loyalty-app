@@ -71,7 +71,7 @@ public class CustomerService {
 
         CustomerOrder customerOrder = orderRepository.findByBusinessIdAndCustomerId(businessId,customerId);
         CustomerOrdersTillNow customerOrdersTillNow = new CustomerOrdersTillNow();
-        customerOrdersTillNow.setOrderQuantityTillNow(customerOrder.getOrderedQuantity());
+        customerOrdersTillNow.setOrderQuantityTillNow(customerOrder == null ? 0 : customerOrder.getOrderedQuantity());
         Optional<BusinessUser> businessUser = businessUserRepository.findById(businessId);
         long productQuantity = businessUser.isPresent()
                     ? businessUser.get().getProduct().getProductOffer().getPurchaseQuantity() : 0;
