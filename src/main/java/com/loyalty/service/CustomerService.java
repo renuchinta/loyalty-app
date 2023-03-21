@@ -23,6 +23,10 @@ public class CustomerService {
     }
 
     public Customer saveCustomer(Customer customer){
+        Optional<Customer> customer1 =  customerRespository.findByPhoneNumber(customer.getPhoneNumber());
+        if(customer1.isPresent()){
+            return customer1.get();
+        }
         return customerRespository.save(customer);
 
     }
