@@ -17,4 +17,6 @@ public interface CustomerRespository extends JpaRepository<Customer,Long> {
     List<BusinessToCustomer> getAllBusinessUsers(Long customerId);
 
     Optional<Customer> findByCustomerQRId(String customerQRId);
+
+    Optional<Customer> findByPhoneNumber(String phoneNumber);
 }
