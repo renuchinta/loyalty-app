@@ -41,7 +41,7 @@ public class CustomerService {
 
     }
     public Customer findByUserNameAndPassword(LoginRequest loginRequest){
-        return customerRespository.findByUsernameAndPassword(loginRequest.getUsername(),loginRequest.getPassword());
+        return customerRespository.findByUsernameAndPassword(loginRequest.username(),loginRequest.password());
     }
 
     public Optional<Customer> findById(Long id){

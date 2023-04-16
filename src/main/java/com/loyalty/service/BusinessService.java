@@ -24,7 +24,7 @@ public class BusinessService {
 
 
     public BusinessUser findByUserNameAndPassword(LoginRequest loginRequest) {
-        return businessUserRepository.findByUserNameAndPassword(loginRequest.getUsername(),loginRequest.getPassword());
+        return businessUserRepository.findByUserNameAndPassword(loginRequest.username(),loginRequest.password());
     }
 
     public Optional<BusinessUser> findById(Long id) {

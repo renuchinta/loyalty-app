@@ -28,7 +28,7 @@ public class BusinessCusomterAdapterService {
     }
     public ResponseEntity<UserDTO> login(LoginRequest loginRequest) {
         UserDTO userDTO = new UserDTO();
-        if(loginRequest.getUserType().equalsIgnoreCase("CUSTOMER")){
+        if(loginRequest.userType().equalsIgnoreCase("CUSTOMER")){
             Customer customer=  customerService.findByUserNameAndPassword(loginRequest);
             userDTO.setId(customer.getId());
             userDTO.setEmail(customer.getEmail());

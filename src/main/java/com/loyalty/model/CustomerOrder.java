@@ -1,7 +1,7 @@
 package com.loyalty.model;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 

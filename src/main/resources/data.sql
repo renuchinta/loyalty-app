@@ -1,0 +1,2 @@
+INSERT IGNORE INTO `LOYALTY_APP`.`authorities` VALUES (NULL, 'tom', 'write');
+INSERT IGNORE INTO `LOYALTY_APP`.`users` VALUES (NULL, 'tom', '123456', '1');

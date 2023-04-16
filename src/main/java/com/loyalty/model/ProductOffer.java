@@ -2,7 +2,7 @@ package com.loyalty.model;
 
 import com.fasterxml.jackson.annotation.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
