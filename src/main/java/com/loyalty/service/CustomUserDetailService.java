@@ -1,3 +1,4 @@
+/*
 package com.loyalty.service;
 
 import com.loyalty.model.Customer;
@@ -28,3 +29,4 @@ public class CustomUserDetailService implements UserDetailsService {
 
     }
 }
+*/

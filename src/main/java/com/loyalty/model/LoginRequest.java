@@ -7,6 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-public record LoginRequest(String username, String password,String userType) {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class LoginRequest {
+    private String username;
+    private String password;
+    private String userType;
 
 }

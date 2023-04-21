@@ -26,9 +26,9 @@ public class BusinessCusomterAdapterService {
         this.productService = productService;
         this.productOfferService = productOfferService;
     }
-    public ResponseEntity<UserDTO> login(LoginRequest loginRequest) {
+    /*public ResponseEntity<UserDTO> login(LoginRequest loginRequest) {
         UserDTO userDTO = new UserDTO();
-        if(loginRequest.userType().equalsIgnoreCase("CUSTOMER")){
+        if(loginRequest.getUserType().equalsIgnoreCase("CUSTOMER")){
             Customer customer=  customerService.findByUserNameAndPassword(loginRequest);
             userDTO.setId(customer.getId());
             userDTO.setEmail(customer.getEmail());
@@ -39,18 +39,13 @@ public class BusinessCusomterAdapterService {
         }else{
             BusinessUser businessUser=  businessService.findByUserNameAndPassword(loginRequest);
             userDTO.setId(businessUser.getId());
-            userDTO.setEmail(businessUser.getEmail());
-            userDTO.setUsername(businessUser.getUserName());
             userDTO.setPhoneNumber(businessUser.getPhoneNumber());
-            userDTO.setProductId(businessUser.getProduct() == null ? 0 : businessUser.getProduct().getId());
-            userDTO.setProductName(businessUser.getProduct() == null ? "" :  businessUser.getProduct().getProductName());
-            userDTO.setProductImage(businessUser.getProduct() ==null ? "" :  businessUser.getProduct().getProductImage());
             userDTO.setQrCode(businessUser.getBusinessQRId() == null ? "" : businessUser.getBusinessQRId());
             return new ResponseEntity<>(userDTO,HttpStatus.OK);
         }
 
     }
-
+*/
     public boolean completeBusinessUserSignup(CompleteBusinessUserSignUp completeBusinessUserSignUp) {
         Optional<BusinessUser> business = businessService.findById(completeBusinessUserSignUp.getBusinessUserId());
         if(business.isPresent()){

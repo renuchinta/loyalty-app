@@ -9,7 +9,9 @@ import java.util.Optional;
 @Repository
 public interface BusinessUserRepository  extends JpaRepository<BusinessUser,Long> {
 
-    BusinessUser findByUserNameAndPassword(String username, String password);
+    //BusinessUser findByUserNameAndPassword(String username, String password);
 
     Optional<BusinessUser> findByBusinessQRId(String businessQRId);
+
+    Optional<BusinessUser> findByPhoneNumber(String phoneNumber);
 }

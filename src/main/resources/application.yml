@@ -5,6 +5,8 @@ spring:
     url: jdbc:mysql://localhost:3306/LOYALTY_APP?createDatabaseIfNotExist=true
     username: root
     password: password
+    #username: renu
+    #password: renukeswar
     hikari:
       initialization-fail-timeout: 0
   jpa:

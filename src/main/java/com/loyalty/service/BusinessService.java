@@ -22,10 +22,12 @@ public class BusinessService {
         return businessUserRepository.save(businessUser);
     }
 
+/*
 
     public BusinessUser findByUserNameAndPassword(LoginRequest loginRequest) {
-        return businessUserRepository.findByUserNameAndPassword(loginRequest.username(),loginRequest.password());
+        return businessUserRepository.findByUserNameAndPassword(loginRequest.getUsername(),loginRequest.getPassword());
     }
+*/
 
     public Optional<BusinessUser> findById(Long id) {
         return businessUserRepository.findById(id);

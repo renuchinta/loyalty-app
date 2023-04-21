@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerRespository extends JpaRepository<Customer,Long> {
-    Customer findByUsernameAndPassword(String username, String password);
+   // Customer findByUsernameAndPassword(String username, String password);
 
     @Query(nativeQuery = true)
     List<BusinessToCustomer> getAllBusinessUsers(Long customerId);
@@ -20,5 +20,4 @@ public interface CustomerRespository extends JpaRepository<Customer,Long> {
 
     Optional<Customer> findByPhoneNumber(String phoneNumber);
 
-    Customer findByEmail(String email);
 }

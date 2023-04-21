@@ -40,9 +40,11 @@ public class CustomerService {
         return customerRespository.save(customer);
 
     }
+/*
     public Customer findByUserNameAndPassword(LoginRequest loginRequest){
-        return customerRespository.findByUsernameAndPassword(loginRequest.username(),loginRequest.password());
+        return customerRespository.findByUsernameAndPassword(loginRequest.getUsername(),loginRequest.getPassword());
     }
+*/
 
     public Optional<Customer> findById(Long id){
         return customerRespository.findById(id);
@@ -66,7 +68,6 @@ public class CustomerService {
         BusinessUser businessUser = businessUser1.get();
         BusinessCustomDTO businessCustomDTO  = new BusinessCustomDTO();
         businessCustomDTO.setBusinessId(businessUser.getId());
-        businessCustomDTO.setBusinessName(businessUser.getUserName());
         businessCustomDTO.setBusinessQrId(businessUser.getBusinessQRId());
         businessCustomDTO.setId(businessUser.getId());
         return businessCustomDTO;

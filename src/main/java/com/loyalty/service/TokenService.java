@@ -1,3 +1,4 @@
+/*
 package com.loyalty.service;
 
 import org.springframework.security.core.Authentication;
@@ -36,3 +37,4 @@ public class TokenService {
     }
 
 }
+*/

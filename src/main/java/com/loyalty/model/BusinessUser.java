@@ -1,18 +1,16 @@
 package com.loyalty.model;
 
 import com.fasterxml.jackson.annotation.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 
 @Entity
-@Table(name = "BUSINESS_USER")
+@Table(name = "BUSINESS_USER_DETAILS")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,12 +24,11 @@ public class BusinessUser {
     @Column(name = "id")
     private Long id;
 
-
+    @Column
+    private Long userId;
+    @Column
     private String address;
-    private String userName;
     private String phoneNumber;
-    private String email;
-    private String password;
     private String businessQRId;
     // One business will have one product
     @OneToOne
@@ -55,10 +52,7 @@ public class BusinessUser {
         return "BusinessUser{" +
                 "id=" + id +
                 ", address='" + address + '\'' +
-                ", userName='" + userName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 

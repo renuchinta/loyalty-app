@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +30,8 @@ public class Customer {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    private String username;
+    private Long userId;
     private String phoneNumber;
-    private String email;
-    private String password;
     private String customerQRId;
 
     @ManyToMany(mappedBy = "customerList")

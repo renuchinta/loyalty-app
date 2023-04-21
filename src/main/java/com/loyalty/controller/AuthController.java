@@ -1,3 +1,4 @@
+/*
 package com.loyalty.controller;
 
 import org.slf4j.Logger;
@@ -33,3 +34,4 @@ public class AuthController {
         return tokenService.generateToken(authentication);
     }
 }
+*/

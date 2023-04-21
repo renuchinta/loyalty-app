@@ -20,8 +20,8 @@ public class LoginController {
         this.businessCusomterAdapterService = businessCusomterAdapterService;
     }
 
-    @PostMapping
+   /* @PostMapping
     public ResponseEntity<UserDTO> login(@RequestBody LoginRequest loginRequest){
         return businessCusomterAdapterService.login(loginRequest);
-    }
+    }*/
 }

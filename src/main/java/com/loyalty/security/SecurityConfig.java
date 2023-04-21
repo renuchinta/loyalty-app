@@ -1,3 +1,4 @@
+/*
 
  package com.loyalty.security;
 
@@ -51,7 +52,8 @@
          return new ProviderManager(authProvider);
      }
 
-     /*@Bean
+     */
+/*@Bean
      public UserDetailsService userDetailsService() {
          return new InMemoryUserDetailsManager(
                  User.withUsername("dvega")
@@ -59,7 +61,8 @@
                          .authorities("read")
                          .build()
          );
-     }*/
+     }*//*
+
 
      @Bean
      public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -106,3 +109,4 @@
  }
 
 
+*/

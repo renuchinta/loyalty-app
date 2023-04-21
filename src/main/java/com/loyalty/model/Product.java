@@ -2,7 +2,8 @@ package com.loyalty.model;
 
 import com.fasterxml.jackson.annotation.*;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 import lombok.*;
 
 @Entity

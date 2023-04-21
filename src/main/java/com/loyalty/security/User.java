@@ -1,8 +1,11 @@
+/*
 package com.loyalty.security;
 
 
-import jakarta.persistence.Entity;
+
 import lombok.*;
+
+import javax.persistence.*;
 
 
 @Data
@@ -18,3 +21,4 @@ public class User {
     private String password;
 
 }
+*/
