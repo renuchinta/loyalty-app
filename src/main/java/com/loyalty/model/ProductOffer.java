@@ -25,7 +25,7 @@ public class ProductOffer {
 
     private String offerName;
     private Integer freeQuantity;
-    private Integer purchaseQuantity;
+    private Long purchaseQuantity;
     private String productOfferImageUrl;
 
 /*

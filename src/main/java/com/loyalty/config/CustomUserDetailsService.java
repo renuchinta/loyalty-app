@@ -115,11 +115,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 		Customer customer = new Customer();
 		customer.setPhoneNumber(user.getPhoneNumber());
 		customer.setUserId(savedUser.getId());
+		customer.setCustomerQRId(user.getQrCode());
+
 		Customer saveedCustomerUser = customerRespository.save(customer);
 		customUserResponse.setEmail(savedUser.getEmail());
 		customUserResponse.setPhoneNumber(saveedCustomerUser.getPhoneNumber());
 		customUserResponse.setUsername(savedUser.getUsername());
-		customUserResponse.setUserType(savedUser.getUserType());
 		customUserResponse.setUserType(savedUser.getUserType());
 		customUserResponse.setId(savedUser.getId());
 	}
