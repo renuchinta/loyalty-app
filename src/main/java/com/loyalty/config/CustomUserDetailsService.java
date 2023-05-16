@@ -76,6 +76,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	public CustomUserResponse save(UserDTO user) {
 		CustomUserResponse customUserResponse = new CustomUserResponse();
+		if(user.getUserType().equalsIgnoreCase("CUSTOMER")){
+			Optional<Customer> dbCustomer = customerRespository.findByPhoneNumber(user.getPhoneNumber());
+			if(dbCustomer.isPresent()){
+				customUserResponse.setCustomMessages("Phone number already exists");
+				return customUserResponse;
+			}
+		}
 		DAOUser newUser = new DAOUser();
 		newUser.setUsername(user.getUsername());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
@@ -96,15 +103,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 		}else{
 			DAOUser savedUser = userDao.save(newUser);
 			if(savedUser.getUserType().equalsIgnoreCase("CUSTOMER")){
-				saveCustomerUser(user, customUserResponse, savedUser);
+				setCustomerUser(user, customUserResponse, savedUser);
 			}else{
-				saveBusinessUser(user, customUserResponse, savedUser);
+				setBusinessUser(user, customUserResponse, savedUser);
 			}
 		}
 		return customUserResponse;
 	}
 
-	private void saveCustomerUser(UserDTO user, CustomUserResponse customUserResponse, DAOUser savedUser) {
+	private void setCustomerUser(UserDTO user, CustomUserResponse customUserResponse, DAOUser savedUser) {
 		Customer customer = new Customer();
 		customer.setPhoneNumber(user.getPhoneNumber());
 		customer.setUserId(savedUser.getId());
@@ -117,7 +124,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		customUserResponse.setId(savedUser.getId());
 	}
 
-	private void saveBusinessUser(UserDTO user, CustomUserResponse customUserResponse, DAOUser savedUser) {
+	private void setBusinessUser(UserDTO user, CustomUserResponse customUserResponse, DAOUser savedUser) {
 		BusinessUser businessUser = new BusinessUser();
 		businessUser.setPhoneNumber(user.getPhoneNumber());
 		businessUser.setUserId(savedUser.getId());

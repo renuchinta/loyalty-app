@@ -11,4 +11,5 @@ public class CustomUserResponse {
     private String userType;
 
     private Long id;
+    private String customMessages;
 }

@@ -60,3 +60,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 
 }
+// authenticate
+// register
+// ccompleteBusinessUserSignup
+//
