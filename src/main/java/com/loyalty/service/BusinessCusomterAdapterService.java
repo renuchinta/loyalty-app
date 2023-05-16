@@ -2,10 +2,8 @@ package com.loyalty.service;
 
 import com.loyalty.dto.CompleteBusinessUserSignUp;
 import com.loyalty.model.*;
-import com.loyalty.dto.UserDTO;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.loyalty.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,13 +15,17 @@ public class BusinessCusomterAdapterService {
     private final CustomerService customerService;
     private final ProductService productService;
 
+    private final UserRepository userRepository;
+
+
     //HibernateJpaConfiguration hibernate;
     
     private final ProductOfferService productOfferService;
-    public BusinessCusomterAdapterService(BusinessService businessService, CustomerService customerService, ProductService productService, ProductOfferService productOfferService) {
+    public BusinessCusomterAdapterService(BusinessService businessService, CustomerService customerService, ProductService productService, UserRepository userRepository, ProductOfferService productOfferService) {
         this.businessService = businessService;
         this.customerService = customerService;
         this.productService = productService;
+        this.userRepository = userRepository;
         this.productOfferService = productOfferService;
     }
     /*public ResponseEntity<UserDTO> login(LoginRequest loginRequest) {
@@ -47,12 +49,16 @@ public class BusinessCusomterAdapterService {
     }
 */
     public boolean completeBusinessUserSignup(CompleteBusinessUserSignUp completeBusinessUserSignUp) {
-        Optional<BusinessUser> business = businessService.findById(completeBusinessUserSignUp.getBusinessUserId());
+        Optional<DAOUser> business = userRepository.findById(completeBusinessUserSignUp.getBusinessUserId());
+        //Optional<BusinessUser> business = businessService.findById(completeBusinessUserSignUp.getBusinessUserId());
         if(business.isPresent()){
             Optional<Product> product = productService.findById(completeBusinessUserSignUp.getProductId());
-            BusinessUser businessUser = business.get();
+            DAOUser daoUser = business.get();
+            BusinessUser businessUser = new BusinessUser();
             businessUser.setBusinessQRId(completeBusinessUserSignUp.getBusinessQRId());
             businessUser.setProduct(product.get());
+            businessUser.setUserId(daoUser.getId());
+
             businessService.saveBusinessUser(businessUser);
 
             Optional<ProductOffer> productOffer = productOfferService.findById(completeBusinessUserSignUp.getProductOfferId());

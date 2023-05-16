@@ -14,4 +14,6 @@ public interface BusinessUserRepository  extends JpaRepository<BusinessUser,Long
     Optional<BusinessUser> findByBusinessQRId(String businessQRId);
 
     Optional<BusinessUser> findByPhoneNumber(String phoneNumber);
+
+    BusinessUser findByUserId(Long id);
 }

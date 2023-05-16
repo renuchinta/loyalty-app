@@ -9,4 +9,6 @@ public class CustomUserResponse {
     private String email;
     private String phoneNumber;
     private String userType;
+
+    private Long id;
 }

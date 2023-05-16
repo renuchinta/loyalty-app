@@ -6,6 +6,7 @@ import com.loyalty.dto.UserDTO;
 import com.loyalty.model.BusinessUser;
 import com.loyalty.model.Customer;
 import com.loyalty.model.DAOUser;
+import com.loyalty.model.LoginResponse;
 import com.loyalty.repository.BusinessUserRepository;
 import com.loyalty.repository.CustomerRespository;
 import com.loyalty.repository.UserRepository;
@@ -59,8 +60,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 		*/
 		// TODO Need to check fields in DAOUser are sufficient or do we need to get from BusinessUser and CusotmerUser class also
 		DAOUser user = userDao.findByUsername(username);
+		BusinessUser businessUser = businessUserRepository.findByUserId(user.getId());
+		LoginResponse loginResponse = new LoginResponse();
+
 		if (user != null) {
 			roles = Arrays.asList(new SimpleGrantedAuthority(user.getRole()));
+			loginResponse.setProductId(businessUser.getProduct().getId());
+			loginResponse.setProductName(businessUser.getProduct().getProductName());
+			loginResponse.setUsername(user.getUsername());
+
 			return new User(user.getUsername(), user.getPassword(), roles);
 		}
 		throw new UsernameNotFoundException("User not found with the name " + username);
@@ -106,6 +114,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		customUserResponse.setUsername(savedUser.getUsername());
 		customUserResponse.setUserType(savedUser.getUserType());
 		customUserResponse.setUserType(savedUser.getUserType());
+		customUserResponse.setId(savedUser.getId());
 	}
 
 	private void saveBusinessUser(UserDTO user, CustomUserResponse customUserResponse, DAOUser savedUser) {
@@ -118,6 +127,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		customUserResponse.setUsername(savedUser.getUsername());
 		customUserResponse.setUserType(savedUser.getUserType());
 		customUserResponse.setUserType(savedUser.getUserType());
+		customUserResponse.setId(savedUser.getId());
 	}
 
 	private void setCustomResponseForCustomer(CustomUserResponse customUserResponse, DAOUser daoUser, Customer customer) {
@@ -131,6 +141,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		customUserResponse.setEmail(daoUser.getEmail());
 		customUserResponse.setUsername(daoUser.getUsername());
 		customUserResponse.setUserType(daoUser.getUserType());
+		customUserResponse.setId(daoUser.getId());
 	}
 
 }

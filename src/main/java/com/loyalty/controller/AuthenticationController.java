@@ -3,9 +3,9 @@ package com.loyalty.controller;
 import com.loyalty.config.CustomUserDetailsService;
 import com.loyalty.config.JwtUtil;
 import com.loyalty.dto.UserDTO;
-import com.loyalty.model.AuthenticationRequest;
-import com.loyalty.model.AuthenticationResponse;
-import com.loyalty.model.UserEntityDTO;
+import com.loyalty.model.*;
+import com.loyalty.repository.BusinessUserRepository;
+import com.loyalty.repository.UserRepository;
 import io.jsonwebtoken.impl.DefaultClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,11 +29,15 @@ import java.util.Map;
 public class AuthenticationController {
 
 	@Autowired
+	private UserRepository userRepository;
+	@Autowired
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
 
+	@Autowired
+	private BusinessUserRepository businessUserRepository;
 	@Autowired
 	private JwtUtil jwtUtil;
 
@@ -50,7 +56,18 @@ public class AuthenticationController {
 		
 		UserDetails userdetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		String token = jwtUtil.generateToken(userdetails);
-		return ResponseEntity.ok(new AuthenticationResponse(token));
+
+		DAOUser user = userRepository.findByUsername(authenticationRequest.getUsername());
+		BusinessUser businessUser = businessUserRepository.findByUserId(user.getId());
+		LoginResponse loginResponse = new LoginResponse();
+
+		loginResponse.setProductId(businessUser.getProduct().getId());
+		loginResponse.setProductName(businessUser.getProduct().getProductName());
+		loginResponse.setUsername(user.getUsername());
+		loginResponse.setToken(token);
+		loginResponse.setId(user.getId());
+		loginResponse.setQrCode(businessUser.getBusinessQRId());
+		return ResponseEntity.ok(loginResponse);
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)

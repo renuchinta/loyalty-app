@@ -43,8 +43,8 @@ public class JwtUtil {
 
 		Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
 
-		if (roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-			claims.put("isAdmin", true);
+		if (roles.contains(new SimpleGrantedAuthority("ROLE_BUSINESS"))) {
+			claims.put("isBusiness", true);
 		}
 		if (roles.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
 			claims.put("isUser", true);
@@ -82,11 +82,11 @@ public class JwtUtil {
 
 		List<SimpleGrantedAuthority> roles = null;
 
-		Boolean isAdmin = claims.get("isAdmin", Boolean.class);
+		Boolean isBusiness = claims.get("isBusiness", Boolean.class);
 		Boolean isUser = claims.get("isUser", Boolean.class);
 
-		if (isAdmin != null && isAdmin) {
-			roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		if (isBusiness != null && isBusiness) {
+			roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_BUSINESS"));
 		}
 
 		if (isUser != null && isUser) {
