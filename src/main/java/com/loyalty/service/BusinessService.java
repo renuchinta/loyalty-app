@@ -22,6 +22,10 @@ public class BusinessService {
         return businessUserRepository.save(businessUser);
     }
 
+    public BusinessUser findByUserId(Long userId){
+        return businessUserRepository.findByUserId(userId);
+    }
+
 /*
 
     public BusinessUser findByUserNameAndPassword(LoginRequest loginRequest) {

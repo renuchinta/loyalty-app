@@ -55,11 +55,15 @@ public class BusinessCusomterAdapterService {
             Optional<Product> product = productService.findById(completeBusinessUserSignUp.getProductId());
             DAOUser daoUser = business.get();
             BusinessUser businessUser = new BusinessUser();
-            businessUser.setBusinessQRId(completeBusinessUserSignUp.getBusinessQRId());
-            businessUser.setProduct(product.get());
-            businessUser.setUserId(daoUser.getId());
 
-            businessService.saveBusinessUser(businessUser);
+            BusinessUser businessUserByUserId = businessService.findByUserId(daoUser.getId());
+
+            businessUserByUserId.setBusinessQRId(completeBusinessUserSignUp.getBusinessQRId());
+            businessUserByUserId.setProduct(product.get());
+            businessUserByUserId.setUserId(daoUser.getId());
+            if(businessUserByUserId != null){
+                businessService.saveBusinessUser(businessUserByUserId);
+            }
 
             Optional<ProductOffer> productOffer = productOfferService.findById(completeBusinessUserSignUp.getProductOfferId());
        //     product.get().addBusinessUser(businessUser);
