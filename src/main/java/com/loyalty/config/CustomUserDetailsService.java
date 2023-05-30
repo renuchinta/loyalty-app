@@ -60,6 +60,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 		*/
 		// TODO Need to check fields in DAOUser are sufficient or do we need to get from BusinessUser and CusotmerUser class also
 		DAOUser user = userDao.findByUsername(username);
+		if(user.getUserType().equalsIgnoreCase("CUSTOMER")){
+			return new User(user.getUsername(), user.getPassword(), Arrays.asList(new SimpleGrantedAuthority(user.getRole())));
+		}
 		BusinessUser businessUser = businessUserRepository.findByUserId(user.getId());
 		LoginResponse loginResponse = new LoginResponse();
 

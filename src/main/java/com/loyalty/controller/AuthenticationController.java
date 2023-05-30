@@ -58,15 +58,17 @@ public class AuthenticationController {
 		String token = jwtUtil.generateToken(userdetails);
 
 		DAOUser user = userRepository.findByUsername(authenticationRequest.getUsername());
-		BusinessUser businessUser = businessUserRepository.findByUserId(user.getId());
 		LoginResponse loginResponse = new LoginResponse();
 
-		loginResponse.setProductId(businessUser.getProduct().getId());
-		loginResponse.setProductName(businessUser.getProduct().getProductName());
+		if(!user.getUserType().equalsIgnoreCase("CUSTOMER")){
+			BusinessUser businessUser = businessUserRepository.findByUserId(user.getId());
+			loginResponse.setProductId(businessUser.getProduct().getId());
+			loginResponse.setProductName(businessUser.getProduct().getProductName());
+			loginResponse.setQrCode(businessUser.getBusinessQRId());
+		}
 		loginResponse.setUsername(user.getUsername());
 		loginResponse.setToken(token);
 		loginResponse.setId(user.getId());
-		loginResponse.setQrCode(businessUser.getBusinessQRId());
 		return ResponseEntity.ok(loginResponse);
 	}
 	
